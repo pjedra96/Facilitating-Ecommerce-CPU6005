@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WesthoughtonWorldOfWicker.Models.OrderDetail>
+@{
+    ViewData["Title"] = "ViewOrders";
+}
+<h3 class="text-center">My Orders</h3>
+<br />
+<a asp-area="" asp-controller="Review" asp-action="Index">Review an order</a><br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.ModelName)
+            </th>
+            <th>Product Category</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.UnitCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.Total)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ModelName)
+                </td>
+                <td>
+                     @Html.DisplayFor(modelItem => item.Product.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.UnitCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Total)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

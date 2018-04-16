@@ -1,0 +1,32 @@
+This e-commerce website has been developed using ASP.NET Core 1.0 framework in Microsoft Visual Studio 2015.
+In order to test the website, open the "WesthoughtonWorldOfWicker.sln" file using Microsoft Visual Studio.
+
+In order to re-create the database and its contents, you can either run the website and click the "database-update"
+button which should appear within the browser window instead of the website in the testing mode, 
+use the "aspnet-WesthoughtonWorldOfWicker.dacpac" (in the same folder as the Readme) 
+that has been exported from the "project", or manually implement migrations using command prompt and file editing.
+The manual command prompt method is the most recommended method in this case.
+
+The following paragraph describes the manual implementation of migrations (should the database.dacpac method not work). 
+The connection string used to connect to the database is as follows (from "appsettings.json" file):
+"Server=(localdb)\\MSSQLLocalDB;Database=aspnet-WesthoughtonWorldOfWicker;Trusted_Connection=True;MultipleActiveResultSets=true"
+The database migrations file can be found in the "data/migrations" directory.
+----In order to apply the migration file using the manual method 
+(migration creates the database and its tables), open the command prompt,navigate 
+to the "WesthoughtonWorldOfWicker/src/WesthoughtonWorldOfWicker" using the "cd" command and then issue the following 
+command:
+"dotnet ef database update" (without the quotation marks)
+
+Once the database is created, run the website (the data is inserted into the tables upon the first run - SeedData.cs model)
+In order to test the administrative functions, you need to use the administrator account.
+The Administrator username and password are: pj3amt@bolton.ac.uk (username) P@ssw0rd (password)
+
+Remeber to test all the pages, including the "contact" and the "account settings" page
+(which can be viewed by clicking the "Hello _____" message that appears after logging in), as well as "Order Review"
+that can be accessed from the "My Orders" page. 
+Certain buttons require a double click to work (e.g. Remove from cart button/minus sign button)
+In order to add contact details (including address) log in, click the "Hello username" message and then click 
+
+Finally, the website does implement the Luhn Algorithm (card validation function), however due to the number being 
+stored as a string in the model all the credit/debit card  numbers are required to be entered into the input box 
+without spaces or dashes (-). An example: 4034460333157707 (correct credit card number)

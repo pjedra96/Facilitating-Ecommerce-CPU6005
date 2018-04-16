@@ -1,0 +1,13 @@
+@model IEnumerable<WesthoughtonWorldOfWicker.Models.Category>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<ul id="categories">
+    @foreach (var item in Model)
+    {
+        <li>
+            @Html.ActionLink(item.CategoryName, "Browse", "Store", new { Category = item.CategoryName }, null)
+        </li>
+    }
+</ul>

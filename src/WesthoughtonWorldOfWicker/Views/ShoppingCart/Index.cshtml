@@ -1,0 +1,142 @@
+﻿@model WesthoughtonWorldOfWicker.ViewModels.ShoppingCartViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+@functions
+{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            // Document.ready -> link up remove event handler
+            $(".RemoveLink").click(function () {
+                // Get the id from the link
+                var recordToDelete = $(this).attr("data-id");
+                var PostToUrl = $(this).attr("data-url");
+                if (recordToDelete != '') {
+
+                    // Perform the ajax post
+                    $.ajax(PostToUrl, {
+                        type: "post",
+                        data: {
+                            "id": recordToDelete
+                        },
+                        dataType: "json",
+                        headers: {
+                            "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                        }
+                    }).done(function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.itemCount == 0) {
+                            $('#row-' + data.deleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.deleteId).text(data.itemCount);
+                        }
+
+                        $('#cart-total').text(data.cartTotal);
+                        $('#update-message').text(data.message);
+                        $('#cart-status').text(data.cartCount);
+                    });
+                }
+            });
+
+            $(".QuantityLink").click(function () {
+                // Get the id from the link
+                var recordToUpdate = $(this).attr("data-id");
+                var PostToUrl = $(this).attr("data-url");
+                var countToUpdate = $("#" + $(this).attr("txt-id")).val();
+                if (recordToUpdate != '') {
+                    // Perform the ajax post
+                    $.ajax(PostToUrl, {
+                        type: "post",
+                        data: {
+                            "id": recordToUpdate,
+                            "cartCount": countToUpdate
+                        },
+                        dataType: "json",
+                        headers: {
+                            "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                        }
+                    }).done(function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.itemCount > 0) {
+                            $('#item-count-' + data.addId).text(data.itemCount);
+                            $('#update-message').text(data.message);
+                            $('#cart-total').text(data.cartTotal + " (VAT included)");
+                            $('#cart-status').text(data.cartCount);
+                        } else {
+                            
+                        };
+                    }
+            );}});
+        });</script>
+}
+
+<h3>
+    <em>Review</em> your cart:
+</h3>
+<p class="btn btn-secondary">
+    <a asp-controller="Checkout" asp-action="AddressAndPayment">Checkout >></a>
+</p>
+<div id="update-message">
+</div>
+<p class="btn btn-secondary">
+    <a asp-controller="Store" asp-action="Index">Continue Shopping</a>
+</p>
+<table id="cart-summary" class="table table-bordered table-responsive table-hover table-striped">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Price (each)
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CartItems)
+    {
+        <tr id="row-@item.CartItemId">
+            <td>
+                <a asp-controller="Store" asp-action="Details" asp-route-id="@item.ProductId">@item.Product.ModelName</a>
+            </td>
+            <td>
+                @item.Product.UnitCost
+            </td>
+            <td id="item-count-@item.CartItemId">
+                @item.Quantity
+            </td>
+            <td>
+                <a href="#" class="QuantityLink" data-id="@item.CartItemId"
+                   data-url='@Url.Content("~/ShoppingCart/IncreaseQuantity")'>
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a href="#" class="RemoveLink" data-id="@item.CartItemId"
+                   data-url='@Url.Content("~/ShoppingCart/RemoveFromCart")'>
+                    <span class="glyphicon glyphicon-minus"></span>
+                </a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td></td>
+        <td></td>
+        <td id="cart-total">
+            @Model.CartTotal (VAT included)
+        </td>
+    </tr>
+</table>

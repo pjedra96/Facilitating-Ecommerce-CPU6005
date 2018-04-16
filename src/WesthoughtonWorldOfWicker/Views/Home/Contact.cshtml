@@ -1,0 +1,61 @@
+﻿@model Contact
+@{
+    ViewData["Title"] = "Contact";
+}
+<h3 class="text-center">@ViewData["Title"]</h3>
+<h4 class="text-center">@ViewData["Message"]</h4>
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form asp-action="SubmitContactForm" asp-controller="Home" method="post" class="form-horizontal">
+                <h3>Contact Us</h3>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="col-md-2 control-label">Name :</label>
+                    <div class="col-md-10">
+                        <input asp-for="Name" type="text" name="name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-2 control-label">Email :</label>
+                    <div class="col-md-10">
+                        <input asp-for="Email" type="text" name="email" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic" class="col-md-2 control-label">Topic :</label>
+                    <div class="col-md-10">
+                        <input asp-for="Topic" type="text" name="topic" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message" class="col-md-2 control-label">Message :</label>
+                    <div class="col-md-10">
+                        <textarea asp-for="Name" name="message" class="form-control"></textarea><br />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </form>
+        </section>
+</div>
+    <div class="col-xs-12 col-sm-5 col-md-4">
+        <br /><br />
+        <hr />
+        <address>
+            <p>You can find us at the following address:</p>
+            Deane Rd<br />
+            Bolton, BL3 5AB<br />
+            Great Britain<br />
+            <abbr title="Phone">P:</abbr>
+            01204 900600
+        </address>
+        <address>
+            <strong>Design and Development:</strong> <a href="mailto:pj3amt@bolton.ac.uk">pj3amt@bolton.ac.uk</a><br />
+        </address>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model Order
+
+@{
+    ViewBag.Title = "Address And Payment";
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<form asp-antiforgery="true">
+    <h2>Address And Payment</h2>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <br />
+
+    <fieldset>
+        <legend>Address</legend>
+        <p>Choose your address from the previously saved addresses</p>
+        <div class="editor-label">
+            <label asp-for="InfoId">Choose the address</label>
+            <div class="editor-field">
+                <select asp-for="InfoId" class="form-control" asp-items="ViewBag.InfoId"></select>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Payment</legend>
+        <p>Please enter your credit/debit card details</p>
+
+        <div class="editor-label">
+            <label title="Card Number">Card Number (no spaces of dashes)</label>
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("PromoCode")
+        </div>
+    </fieldset>
+    <br />
+    <input type="submit" value="Submit Order" />
+</form>

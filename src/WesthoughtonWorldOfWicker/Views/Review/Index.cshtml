@@ -1,0 +1,49 @@
+﻿@model Review
+@{
+    ViewData["Title"] = "Review an order";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-controller="Review" asp-action="Review" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+    <h4>Create a new account.</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="OrderId" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Rating" class="col-md-2 control-label">Rating (1-10)</label>
+        <div class="col-md-10">
+            <input asp-for="Rating" class="form-control" />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Comments" class="form-control" />
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Review</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

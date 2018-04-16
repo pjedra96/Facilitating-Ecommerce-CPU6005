@@ -1,0 +1,17 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Checkout Complete";
+}
+
+<h2>Checkout Complete</h2>
+
+<p>Thank you for your order! Your order number is: <strong>@Model</strong></p>
+<p>Total: <strong>@ViewBag.VatFree</strong>(excluding VAT)</p>
+<p>Total Price <strong>@ViewBag.Total</strong>(including VAT)</p>
+
+<br />
+<p>
+    How about shopping for more products in our
+    <a asp-controller="Home" asp-action="Index">Store</a>
+</p>

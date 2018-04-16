@@ -1,0 +1,45 @@
+@model WesthoughtonWorldOfWicker.Models.Product
+
+@{
+    ViewBag.Title = "Product - " + Model.ModelName;
+}
+
+<h3 class="text-center">@Model.ModelName</h3>
+<hr />
+<p class="col-md-3">
+    <img class="img-responsive" alt="@Model.ModelName" src="@Url.Content(@Model.productImageUrl)" />
+</p>
+
+<div class="col-md-9">
+    <br /><br />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelNumber)
+        </dd>
+        <dt>
+           Unit Price
+        </dt>
+        <dd>
+            @String.Format("{0:F}", Model.UnitCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    <div class="col-md-5"><p><a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@Model.ProductId" style="color:white;width:100%;" class="btn btn-primary">Add to cart</a></p></div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-3"><p><a asp-action="Index" style="color:white;width:100%;" class="btn btn-primary">Back to the list</a></p></div>
+</div>

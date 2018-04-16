@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WesthoughtonWorldOfWicker</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top visible-xs">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Store" asp-action="Index">Search for furniture</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <img src="~/images/title.png" id="title" alt="WesthoughtonWorldOfWicker" class="center-block" width="600" /><br />
+    <div id="login" class="visible-lg">@await Html.PartialAsync("_LoginPartial")<br />
+        @if (User.Identity.IsAuthenticated){<span class="list-unstyled">@await Component.InvokeAsync("CartSummary")</span>}
+    </div>
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="ProductsManagement" asp-action="Index">Products Management</a>
+    }<br />
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="OrderManagement" asp-action="Index">Order Management</a><br />
+    }
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="Contacts" asp-action="Index">Contact Form Info Management</a>
+    }<br/>
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="ReviewManagement" asp-action="Index">Reviews Management Panel</a>
+    }<br />
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="InfoManagement" asp-action="Index">Users Contact Details Management</a>
+    }<br />
+    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+    {
+        <a asp-area="" asp-controller="Account" asp-action="AddAccount">Create new user</a>
+    }
+
+    <div id="desktopNav">
+        <div id="links">
+                <ul class="center-block">
+                    <li id="li1"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @await Component.InvokeAsync("CategoryMenu")
+                    <li id="li2"><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li id="li2"><a asp-area="" asp-controller="Store" asp-action="ViewOrders">My Orders</a></li>
+                </ul>
+        </div>
+    </div><br />
+    <div class="container-fluid body-content">
+        @RenderBody()
+    </div>
+    <footer class ="col-sm-12" style="background-color:white;">
+        <br /><hr />
+        <ul class="list-unstyled col-sm-2">
+            <li><h5><strong>Information</strong></h5></li>
+            <li>Delivery & Returns</li>
+            <li>Terms & Conditions</li>
+            <li>Privacy Policy</li>
+        </ul>
+        <ul class="list-unstyled col-sm-2">
+            <li><h5><strong>More Information</strong></h5></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a></li>
+            <li>FAQ</li>
+        </ul>
+        <ul class="list-unstyled col-sm-2">
+            <li><h5><strong>Join Us</strong></h5></li>
+            <li>Careers</li>
+        </ul>
+        <h5 class="text-right">© 2017 Peter Jedra </h5>
+    </footer>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
